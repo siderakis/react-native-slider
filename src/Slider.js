@@ -167,6 +167,8 @@ export default class Slider extends PureComponent {
      * Used to configure the animation parameters.  These are the same parameters in the Animated library.
      */
     animationConfig: PropTypes.object,
+
+    thumbComponent: PropTypes.func,
   }
 
   static defaultProps = {
@@ -280,6 +282,7 @@ export default class Slider extends PureComponent {
               ...valueVisibleStyle,
             },
           ]}>
+          {this._renderThumbComponent()}
           {this._renderThumbImage()}
         </Animated.View>
         <View
@@ -544,6 +547,14 @@ export default class Slider extends PureComponent {
     if (!thumbImage) return
 
     return <Image source={thumbImage} />
+  }
+
+  _renderThumbComponent = () => {
+    const { thumbComponent } = this.props
+
+    if (!thumbComponent) return
+
+    return thumbComponent()
   }
 }
 
